@@ -36,6 +36,27 @@ filenames.forEach(async (file) => {
 console.log('_________________________________________________________________________\n')
 console.log("> Step 1 success")
 
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const path = parsedUrl.pathname;
+
+  // Handle different routes
+  if (path === '/hello') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello, this is a simple HTTP server!');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not found');
+  }
+});
+
+// Listen on port 8080
+server.listen(8080, () => {
+  console.log('HTTP server is running on port 8080');
+});
+  
+
 
 const TOKEN = process.env.BOTTOKEN;
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -82,23 +103,3 @@ client.login(TOKEN).catch((e) => {
   console.log("Feel free to join our discord server to ask for help");
 });
 
-// Create an HTTP server
-const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
-  const path = parsedUrl.pathname;
-
-  // Handle different routes
-  if (path === '/hello') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello, this is a simple HTTP server!');
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not found');
-  }
-});
-
-// Listen on port 8080
-server.listen(8080, () => {
-  console.log('HTTP server is running on port 8080');
-});
-  
