@@ -3,7 +3,11 @@ const { Client, GatewayIntentBits, Partials } = require('discord.js');
   const client = new Client({ partials: [Partials.Message, Partials.Channel, Partials.Reaction], intents: Object.keys(GatewayIntentBits).map((a) => { return GatewayIntentBits[a] }) });
   client.setMaxListeners(0);
 const { REST, Routes } = require('discord.js');
+const http = require('http'); // Import the 'http' module
+const url = require('url'); // Import the 'url' module
 const fs = require('fs');
+
+
 
 var commands = []
 
@@ -76,5 +80,25 @@ client.login(TOKEN).catch((e) => {
     console.log("> Make sure that your token is correct.");
   }
   console.log("Feel free to join our discord server to ask for help");
+});
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const path = parsedUrl.pathname;
+
+  // Handle different routes
+  if (path === '/hello') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello, this is a simple HTTP server!');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not found');
+  }
+});
+
+// Listen on port 8080
+server.listen(8080, () => {
+  console.log('HTTP server is running on port 8080');
 });
   
