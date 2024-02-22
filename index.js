@@ -33,7 +33,7 @@ console.log('___________________________________________________________________
 console.log("> Step 1 success")
 
 
-const TOKEN = "MTE5MTE4NzYzNDg3MDAyNjI5MA.G96YI2.RIyBDQfUMvN9WMxqW2oafHhwH0zMjcx2SHr_TI";
+const TOKEN = process.env.BOTTOKEN;
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 const CLIENT_ID = "1191187634870026290";
 
